@@ -33,11 +33,19 @@ public final class EdgeSnackBar: NSObject {
 
     public func show(_ message: String,
                      style: Style = .normal,
+                     showsIcon: Bool? = nil,
+                     icon: UIImage? = nil,
                      actionTitle: String? = nil,
                      duration: TimeInterval = 3,
                      action: (() -> Void)? = nil) {
         DispatchQueue.main.async {
-            self.present(message, style: style, actionTitle: actionTitle, duration: duration, action: action)
+            self.present(message,
+                         style: style,
+                         showsIcon: showsIcon,
+                         icon: icon,
+                         actionTitle: actionTitle,
+                         duration: duration,
+                         action: action)
         }
     }
 
@@ -64,6 +72,8 @@ public final class EdgeSnackBar: NSObject {
 
     private func present(_ message: String,
                          style: Style,
+                         showsIcon: Bool?,
+                         icon: UIImage?,
                          actionTitle: String?,
                          duration: TimeInterval,
                          action: (() -> Void)?) {
@@ -99,14 +109,21 @@ public final class EdgeSnackBar: NSObject {
         row.spacing = 12
         row.translatesAutoresizingMaskIntoConstraints = false
 
-        if let iconName = style.iconName {
-            let icon = UIImageView(image: UIImage(systemName: iconName))
-            icon.tintColor = foreground
-            icon.contentMode = .scaleAspectFit
-            icon.setContentHuggingPriority(.required, for: .horizontal)
-            icon.widthAnchor.constraint(equalToConstant: 22).isActive = true
-            icon.heightAnchor.constraint(equalToConstant: 22).isActive = true
-            row.addArrangedSubview(icon)
+        let resolvedIcon: UIImage? = {
+            guard showsIcon ?? appearance.showsIcons else { return nil }
+            if let icon = icon { return icon }
+            guard let name = style.iconName else { return nil }
+            return UIImage(systemName: name)
+        }()
+
+        if let image = resolvedIcon {
+            let iconView = UIImageView(image: image)
+            iconView.tintColor = foreground
+            iconView.contentMode = .scaleAspectFit
+            iconView.setContentHuggingPriority(.required, for: .horizontal)
+            iconView.widthAnchor.constraint(equalToConstant: 22).isActive = true
+            iconView.heightAnchor.constraint(equalToConstant: 22).isActive = true
+            row.addArrangedSubview(iconView)
         }
         row.addArrangedSubview(label)
 

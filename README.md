@@ -40,6 +40,9 @@ Styles: `.normal`, `.success`, `.error`, `.warning`, `.info`
 ```swift
 EdgeSnackBar.shared.appearance.accentColor = .systemIndigo
 EdgeSnackBar.shared.appearance.cornerRadius = 16
+EdgeSnackBar.shared.appearance.showsIcons = false
+EdgeSnackBar.shared.show("Saved", style: .success, showsIcon: false)
+EdgeSnackBar.shared.show("New order", style: .info, icon: UIImage(systemName: "bag.fill"))
 EdgeSnackBar.shared.windowProvider = { myWindow }
 ```
 

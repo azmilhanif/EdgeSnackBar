@@ -25,6 +25,7 @@ extension EdgeSnackBar {
         public var actionFont: UIFont
         public var cornerRadius: CGFloat
         public var shadowOpacity: Float
+        public var showsIcons: Bool
 
         public init(successColor: UIColor = UIColor(red: 0.26, green: 0.63, blue: 0.28, alpha: 1),
                     errorColor: UIColor = UIColor(red: 0.78, green: 0.16, blue: 0.16, alpha: 1),
@@ -38,7 +39,8 @@ extension EdgeSnackBar {
                     messageFont: UIFont = .systemFont(ofSize: 15, weight: .medium),
                     actionFont: UIFont = .systemFont(ofSize: 14, weight: .bold),
                     cornerRadius: CGFloat = 0,
-                    shadowOpacity: Float = 0.25) {
+                    shadowOpacity: Float = 0.25,
+                    showsIcons: Bool = true) {
             self.successColor = successColor
             self.errorColor = errorColor
             self.warningColor = warningColor
@@ -50,6 +52,7 @@ extension EdgeSnackBar {
             self.actionFont = actionFont
             self.cornerRadius = cornerRadius
             self.shadowOpacity = shadowOpacity
+            self.showsIcons = showsIcons
         }
 
         public static var `default`: Appearance { Appearance() }
